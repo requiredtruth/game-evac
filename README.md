@@ -1,14 +1,18 @@
 # EVAC: ASHFALL
 
-A self-contained top-down cooperative zombie evacuation game for desktop and mobile browsers. Open **index.html** (or the release's **game-evac.html**) in a modern browser. No build step or game server is required for solo play.
+A self-contained **3D** cooperative zombie evacuation game for desktop and mobile browsers. Open **index.html** (or the release's **game-evac.html**) in a modern browser. No build step or game server is required for solo play.
 
 **Mission:** find 40 civilians in Greyhaven, escort them to the helicopter LZ, and evacuate your operators before the 24-hour destruction deadline. Select a rifleman, medic or engineer loadout. Two Hummers, civilian vehicles, turrets, explosive infected, night aggression, airstrikes and supply drops are playable.
+
+The default view is a real-time WebGL perspective world with modeled buildings, vehicles, hazmat operators, infected, helicopters and fog. A 2D tactical map is available with M. WebGL support is required. All renderer code is embedded in the HTML.
 
 ## Controls
 
 | Action | Desktop | Touch |
 |---|---|---|
 | Move / drive | WASD or arrows | Left thumbstick |
+| Rotate camera | Right mouse drag or Q / Z | LOOK buttons |
+| Camera zoom | Mouse wheel | Fixed follow distance |
 | Aim / fire | Mouse / hold left click | Tap or hold world; FIRE button |
 | Search, recruit, enter or exit | E | INTERACT |
 | Toggle Hummer driver / turret | T | TURRET |

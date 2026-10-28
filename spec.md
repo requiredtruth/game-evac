@@ -1,8 +1,8 @@
-# EVAC: ASHFALL — specification v0.1.0
+# EVAC: ASHFALL — specification v0.2.0
 
 ## Delivery and status
 
-Repository: requiredtruth/game-evac. Branch: main. Release: v0.1.0. Deliverables: game-evac.html (the standalone index.html renamed for download), spec.md, source.zip, SHA256SUMS.txt. This is a playable 2D top-down alpha. No external art or runtime JavaScript dependencies. Desktop and mobile Canvas 2D client; direct WebRTC co-op. All unspecified design decisions below are implementation defaults.
+Repository: requiredtruth/game-evac. Branch: main. Release series: v0.2.0. Deliverables: game-evac.html (the standalone index.html renamed for download), spec.md, source.zip, SHA256SUMS.txt. This is a playable 3D alpha. No external art or runtime JavaScript dependencies. Desktop and mobile WebGL perspective client; direct WebRTC co-op. All unspecified design decisions below are implementation defaults.
 
 ## Scenario and completion
 
@@ -22,7 +22,7 @@ World coordinates are a 2,500 × 2,700 unit rectangle with north at the top. Cen
 
 ## Survivors, buildings and supplies
 
-Buildings begin solid and unsearched. Interact within 70 units of an exterior edge to open/search; searched footprints become traversable top-down interiors, gain a check mark, and cannot be looted again. There are no separate interior scenes or floors. Each building contains 25–54 rounds. Forty seeded buildings each contain one civilian. Search recruits its occupant; civilian movement starts at the searching operator's location to avoid trapping them inside walls. Following civilians travel on foot, follow faster when separated, and queue automatically within 105 units of the LZ. If their leader dies or evacuates before they reach the zone, civilians wait for another operator to recruit them. They have 100 health and can die. There is no survivor vehicle seating or pathfinding navigation mesh; escort them around unsearched buildings. Dead civilians cannot be replaced.
+Buildings begin solid and unsearched. Interact within 70 units of an exterior edge to open/search; searched footprints become traversable open-roof 3D interiors, gain a check mark, and cannot be looted again. There are no separate interior scenes or floors. Each building contains 25–54 rounds. Forty seeded buildings each contain one civilian. Search recruits its occupant; civilian movement starts at the searching operator's location to avoid trapping them inside walls. Following civilians travel on foot, follow faster when separated, and queue automatically within 105 units of the LZ. If their leader dies or evacuates before they reach the zone, civilians wait for another operator to recruit them. They have 100 health and can die. There is no survivor vehicle seating or pathfinding navigation mesh; escort them around unsearched buildings. Dead civilians cannot be replaced.
 
 ## Loadouts
 
@@ -52,12 +52,20 @@ Google STUN is configured for address discovery. Optional user-supplied TURN URL
 
 ## UI, persistence and accessibility
 
-Responsive full-screen Canvas, high-contrast tactical HUD, loadout and pace selectors, mission briefing, visible button equivalents for keyboard actions, mobile thumbstick and world aiming, full-map toggle, visible supply and airstrike warnings, game-over result. Menu and network text are DOM elements; combat/map graphics are Canvas and do not support nonvisual screen-reader play. No audio, account, analytics or paid content. No third-party art is used. No gamepad support.
+Responsive full-screen WebGL world with Canvas HUD/map overlay, high-contrast tactical HUD, loadout and pace selectors, mission briefing, visible button equivalents for keyboard actions, mobile thumbstick and world aiming, full-map toggle, visible supply and airstrike warnings, game-over result. Menu and network text are DOM elements; combat graphics are WebGL and map graphics are Canvas and do not support nonvisual screen-reader play. No audio, account, analytics or paid content. No third-party art is used. No gamepad support.
 
-Solo operations menu pauses the mission; connected co-op continues. Host may save JSON to localStorage, including clock, buildings, civilians, inventories and enemies. Resume restores only original host operator and continues as solo; clients are omitted. No file export, cloud save or backward save migration. Save compatibility version: 1. Closing/reloading without saving discards the mission. Modern Chrome, Edge, Firefox and Safari with Canvas/WebRTC are the target; real-device/iOS coverage remains unverified.
+Solo operations menu pauses the mission; connected co-op continues. Host may save JSON to localStorage, including clock, buildings, civilians, inventories and enemies. Resume restores only original host operator and continues as solo; clients are omitted. No file export, cloud save or backward save migration. Save compatibility version: 1. Closing/reloading without saving discards the mission. Modern Chrome, Edge, Firefox and Safari with WebGL/Canvas/WebRTC are the target; real-device/iOS coverage remains unverified.
 
 ## Validation and known limitations
 
 Actual embedded simulation code is tested by `node tests/rules.cjs`: deterministic 40-person placement, search/loot, sequential 120-second extraction, destruction deadline, operator extraction, win condition, vehicle entry/turret/exit, airstrike, supply cooldown/collection, repair and night speed. Browser smoke tests cover deployment, desktop/mobile rendering, local save and real WebRTC host/client state propagation. Automated local peers cannot prove connectivity through unrelated internet NATs or sustained 24-hour play. GitHub release workflow runs the rule and browser suites before publishing assets.
 
 Remaining scope: complete citywide 2012 map verification; richer interiors, route-finding and art; host migration/reconnection; managed relay/matchmaking; survivor transport in cars; long-session and physical-device performance testing. These limitations must remain explicit in release notes.
+
+## 3D rendering and camera (v0.2.0)
+
+Default gameplay uses a perspective third-person camera in a genuinely three-dimensional WebGL scene. World state x/y positions become world x/z ground coordinates; modeled height is world y. Buildings have elevated walls, gabled roofs, windows and doors, with raised chapel crosses and shop awnings. Searched buildings reveal floors and low cutaway walls with simple interior props so operators can enter and see inside. Hazmat operators, civilians and infected are articulated box meshes; Hummers/cars have bodywork, windows, wheels and elevated turrets. Helicopters have hulls, tails, animated rotors and landing skids. Road surfaces, sidewalks, rail corridor, yard trees, LZ markings, crates, explosions and tracers are 3D meshes. Art is deliberately low-poly and procedural. World geometry uses depth testing, directional diffuse light, ambient light, day/night tint and distance fog. No external engine or asset CDN is needed.
+
+Camera follows behind and above the operator/vehicle. Right-drag or Q/Z rotates it; mouse wheel adjusts distance (130–440 world units). Mobile LOOK buttons rotate in 22.5-degree increments. WASD/thumbstick movement is relative to camera yaw. A screen-to-ground perspective ray determines the aiming point; map view pauses firing. M toggles the original 2D tactical overview without changing the mission state. WebGL failure displays a visible requirement/error message; there is no automatic 2D gameplay fallback.
+
+Static world meshes are cached and rebuilt when building search state changes; dynamic actors share a streamed vertex buffer. Rendering caps at approximately 30 frames/second and pixel ratio 1.25 to reduce mobile GPU load, while simulation remains fixed-step. Distant actors are culled. Browser smoke tests require actual WebGL frames and zero GL errors, capture 3D desktop/mobile screenshots, exercise camera controls, and retain all eight-human co-op checks. Art, world movement and combat remain constrained to the ground plane: no jumping, multistory navigation, slopes, ragdolls or vehicle suspension physics. Building bullet occlusion, full pathfinding and citywide historical fidelity remain the limitations stated above.

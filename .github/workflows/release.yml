@@ -34,5 +34,5 @@ jobs:
           git archive --format=zip HEAD -o dist/source.zip
           cd dist
           sha256sum game-evac.html spec.md source.zip > SHA256SUMS.txt
-          TAG="v0.1.0-${GITHUB_RUN_NUMBER}"
+          TAG="v0.2.0-${GITHUB_RUN_NUMBER}"
           gh release create "$TAG" game-evac.html spec.md source.zip SHA256SUMS.txt --target "$GITHUB_SHA" --title "EVAC: ASHFALL $TAG" --notes-file ../md/RELEASE_NOTES.md
