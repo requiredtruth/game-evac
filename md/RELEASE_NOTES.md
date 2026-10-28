@@ -1,13 +1,13 @@
-# EVAC: ASHFALL — 3D alpha
+# ASHFALL · Evacuation Protocol — v0.3
 
-Download **game-evac.html** and open it in a modern desktop or mobile browser. **spec.md** documents all rules, defaults and limitations; **source.zip** contains the source and tests.
+A substantial 3D gameplay and presentation upgrade. Download **game-evac.html**, open it in a modern WebGL browser, and begin an operation. **spec.md** documents the rules and limits; **source.zip** includes editable sources, the standalone build and tests.
 
-- **3D conversion:** third-person camera, camera-relative movement, ground-ray aiming, Q/Z or right-drag rotation, mobile LOOK buttons, lighting and fog. WebGL required.
-- Solo and up to eight real human operators through direct WebRTC invitation exchange.
-- Forty hidden civilians, a 24-hour simulation clock, sequential two-game-minute helicopter evacuation and the city destruction deadline.
-- Three loadouts, mobile controls, two turret-equipped Hummers, civilian cars, explosive infected, night aggression, loot, airstrikes, supply helicopters and local solo saves.
-- Default 24-minute game or real-time 24-hour mode.
+- Redesigned deployment, mission objectives, radar, contextual interactions, vitals, squad status and final debrief.
+- Real shadow maps, warm lighting, procedural sky/clouds, detailed architecture, improved rounded characters and vehicles, foliage and a forward operating base.
+- Civilian vehicle transport, seat-capacity enforcement and automatic helicopter-queue unloading.
+- Obstacle routing for escorts/infected, wall-blocked shots, magazines/reloads, sprint/stamina, nearby medic treatment and spare-part repairs.
+- Combat feedback and synthesized wind, engine, footsteps, gunfire and explosions.
+- Mobile portrait/landscape controls with a look zone, graphics/audio settings, autosave and JSON save export/import.
+- Preserves forty civilians, the 24-hour destruction deadline, two-game-minute helicopter extraction, selectable clock pace, air support and 1–8-player direct co-op.
 
-Historical map limitation: the downtown road geometry is manually traced from an approved map dated May 3, 2012. This is **not an exact full-city reconstruction**: peripheral blocks and all buildings are synthesized. All in-game place names are fictional. Gameplay now uses a true WebGL 3D perspective world with modeled characters, vehicles, buildings, helicopters and cutaway interiors; M opens the 2D tactical map. Direct-pursuit AI and ground-plane movement remain.
-
-Co-op needs exchanged invitation/answer text and a reachable host. Some internet networks need a user-provided TURN relay. No managed matchmaking, host migration, reconnection identity or survivor car seating. Keep the host tab active. Save/resume is host-only and resumes solo. Full details and remaining work are in spec.md.
+**Limits:** this is a stylized procedural-art alpha. Downtown roads reference a verified May 2012 map, but the full city is not an exact historical reconstruction. Co-op uses invitation exchange and may need a user-supplied TURN relay; no hosted lobby, host migration or reconnect identity. WAN connectivity, physical-device performance and 24-hour endurance are not certified. See spec.md for the complete scope.

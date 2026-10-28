@@ -11,11 +11,13 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - run: node scripts/build.cjs --check
       - run: node tests/rules.cjs
       - run: npm install --no-save playwright@1.56.1
       - run: npx playwright install --with-deps chromium
@@ -37,5 +39,5 @@ jobs:
           git archive --format=zip HEAD -o dist/source.zip
           cd dist
           sha256sum game-evac.html spec.md source.zip > SHA256SUMS.txt
-          TAG="v0.2.0-${GITHUB_RUN_NUMBER}"
-          gh release create "$TAG" game-evac.html spec.md source.zip SHA256SUMS.txt --target "$GITHUB_SHA" --title "EVAC: ASHFALL $TAG" --notes-file ../md/RELEASE_NOTES.md
+          TAG="v0.3.0-${GITHUB_RUN_NUMBER}"
+          gh release create "$TAG" game-evac.html spec.md source.zip SHA256SUMS.txt --target main --title "EVAC: ASHFALL $TAG" --notes-file ../md/RELEASE_NOTES.md
